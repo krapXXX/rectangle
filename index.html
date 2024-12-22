@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+   
+   body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    form {
+        background-color: rgba(255, 170, 0, 0.579);
+        padding: 10px;
+        width: 90%;
+        margin-top: 20px;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 20px;
+    }
+
+    .form input {
+        padding: 4px;
+        margin: 7px;
+        width: 50%;
+        background-color: aliceblue;
+    }
+
+    .code {
+        display: flex;
+        justify-content: space-between;
+        width: 60%;
+    }
+
+    .code input {
+        width: 30%;
+    }
+
+    .form button {
+        justify-self: center;
+        padding: 4px;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 20px;
+        background-color: rgba(221, 141, 12, 0.816);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.788);
+    }
+
+    .form button:hover {
+        background-color: rgb(232, 145, 4);
+        box-shadow: none;
+    }
+    .container {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .rectangleStyle {
+            font-size: 20px;
+            text-align: center;
+        }
+</style>
+<form>
+    <div class="form">
+        <label>Width</label>
+        <input type="text" id="width">
+    </div>
+
+    <div class="form">
+        <label>Hight</label>
+        <input type="text" id="hight">
+    </div>
+
+    <div class="form">
+        <label>Color</label>
+        <input type="text" id="colorName">
+    </div>
+
+    <div class="form">
+        <label>Color code</label>
+        <div class="code">
+            <input type="text" id="r" placeholder="R">
+            <input type="text" id="g" placeholder="G">
+            <input type="text" id="b" placeholder="B">
+        </div>
+    </div>
+
+    <div class="form">
+        <button type="button" id="save">Create</button>
+    </div>
+</form>
+
+<div class="container" id="rectangle"></div>
+
+<script>
+    class Rectangle {
+        constructor(width, hight, colorName, colorCode) {
+            this.width = width;
+            this.hight = hight;
+            this.colorName = colorName;
+            this.colorCode = colorCode;
+        }
+
+        createRectangle(element) {
+            const block = document.createElement('div');
+            block.style.width = `${this.width}px`;
+            block.style.height = `${this.hight}px`; // Corrected "hight" to "height"
+            block.style.background = `rgb(${this.colorCode.join(",")})`;
+
+            let colorNameText = document.createElement('p');
+            colorNameText.textContent = `Color: ${this.colorName}`;
+
+            let colorCodeText = document.createElement('p');
+            colorCodeText.textContent = `Color Code: rgb(${this.colorCode.join(",")})`;
+
+            let widthText = document.createElement('p');
+            widthText.textContent = `Width: ${this.width}`;
+
+            let hightText = document.createElement('p');
+            hightText.textContent = `Height: ${this.hight}`;
+
+        block.classList.add('rectangleStyle');
+
+            block.appendChild(colorNameText);
+            block.appendChild(colorCodeText);
+            block.appendChild(widthText);
+            block.appendChild(hightText);
+
+            element.appendChild(block);
+        }
+    }
+
+    document.querySelector("#save").addEventListener('click', function () {
+        let width = parseInt(document.querySelector("#width").value);
+        let hight = parseInt(document.querySelector("#hight").value);
+        let colorName = document.querySelector("#colorName").value;
+        let colorCode = [
+            parseInt(document.querySelector("#r").value),
+            parseInt(document.querySelector("#g").value),
+            parseInt(document.querySelector("#b").value)
+        ];
+
+
+        let rectangleElement = document.querySelector("#rectangle");
+        let newRect = new Rectangle(width, hight, colorName, colorCode);
+        
+        newRect.createRectangle(rectangleElement);
+        console.log(JSON.stringify(newRect));
+    });
+</script>
+
+</html>
